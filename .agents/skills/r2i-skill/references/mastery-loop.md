@@ -2,65 +2,62 @@
 
 This skill should not stop at "repo summary".
 
-Its job is to help the user move through this loop:
+Its job is to help the user move through a staged interview journey:
 
-`understand -> practice -> defend -> write`
+`study-doc -> prediction-pack -> mock -> score-report -> resume`
 
-## 1. Understand
+## 1. Study Doc
 
-Build a compact mental model of the repository:
+First convert the repository into a compact developer learning document:
 - what problem the repo solves
 - who it appears to serve
 - what the main modules or flows are
 - what technical decisions are visible from the codebase
+- what files should be read first
+- what pitfalls will confuse a new learner
 
-This is the foundation. If this step is weak, every later step becomes vague.
+This is the foundation. If this stage is weak, every later stage becomes vague.
 
-## 2. Practice
+## 2. Prediction Pack
 
-Give the user a path to learn actively, not passively.
+After the study document is in place, convert understanding into interview pressure.
 
-Good practice prompts:
-- read these files in this order
-- trace this request path end to end
-- modify this feature safely
-- implement this small extension
-- explain why this module exists
+This stage should identify:
+- likely high-frequency questions
+- role-specific follow-ups
+- killer questions that expose shallow understanding
+- predicted key blockers
+- the fastest topics to patch before the interview
 
-Practice tasks should become slightly harder over time:
-- level 1: reading and tracing
-- level 2: modify behavior
-- level 3: extend architecture or explain tradeoffs
+## 3. Mock
 
-## 3. Defend
+Use the interviewer role here in one-question-at-a-time mode.
 
-Use the interviewer role here.
-
-The interviewer should:
-- ask the most likely follow-up question after each strong claim
-- challenge vague ownership or business-value language
-- expose where the user is relying on inference instead of proof
-- force tradeoff explanations, not just feature descriptions
-
-Examples:
-- "Why did this architecture choice matter?"
-- "How would you defend this bullet if I asked for evidence?"
-- "What would break if this module were removed?"
-- "What part of this impact is verified versus inferred?"
+The mock stage should:
+- ask one question
+- wait for the user's answer
+- score the answer
+- give one concrete improvement tip
+- move to the next highest-value question
 
 The goal is not to intimidate the user. The goal is to harden the story before it reaches the resume.
 
-## 4. Write
+## 4. Score Report
 
-Only after the story survives interviewer pressure should it become:
+After one or more answers, generate a compact debrief:
+- what the user answered well
+- where they were vague or risky
+- what the interviewer would worry about next
+- which 3 questions they should practice next
+
+This turns practice into a repeatable improvement loop.
+
+## 5. Write
+
+Only after the story survives prediction and mock pressure should it become:
 - a short project summary
 - a 1-minute speaking script
 - a bilingual STAR-style resume bullet
-
-Each strong bullet should ideally map back to:
-- repository evidence
-- a plausible user or business value statement
-- one likely interviewer challenge question
 
 ## Rule of Thumb
 

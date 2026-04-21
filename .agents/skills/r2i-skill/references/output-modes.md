@@ -11,6 +11,13 @@ All modes should:
 - offer a next action or follow-up path
 - adapt to target role and candidate profile when interview stakes are involved
 
+Default training order:
+1. `study-doc`
+2. `prediction-pack`
+3. `mock` or `spoken-mock`
+4. `score-report`
+5. `resume`
+
 ## quick-scan
 
 Use when the user wants a first-pass analysis.
@@ -33,6 +40,23 @@ Minimum deliverables:
 - 3 practice tasks or modifications
 - 3-5 interviewer checkpoint questions to verify understanding
 - what to ignore on first pass
+
+`learn` should be compact. If the user explicitly wants a full developer-handbook style output, switch to `study-doc`.
+
+## study-doc
+
+Use when the user wants the repository converted into a development learning document, onboarding guide, or structured study manual.
+
+Minimum deliverables:
+- repo brief
+- product / user / business context
+- architecture and module map
+- request flow or core workflow
+- file reading order
+- key concepts glossary
+- common pitfalls
+- 3-5 checkpoint questions
+- practice tasks
 
 ## interview
 
@@ -80,6 +104,19 @@ Minimum deliverables:
 - response scoring after each answer
 - next question only after the user responds
 
+## score-report
+
+Use when the user wants a scoring summary, practice review, or interview debrief.
+
+Minimum deliverables:
+- score summary
+- dimension scores
+- strongest answer point
+- weakest dimensions
+- likely interviewer concerns
+- patch plan
+- next 3 questions to practice
+
 ## resume
 
 Use when the user wants career-facing output.
@@ -98,12 +135,23 @@ Use when the user asks for R2I, a full analysis, or does not specify a mode.
 
 Minimum deliverables:
 - repo brief
-- compact learning path
-- compact interview pack
-- compact prediction pack
+- compact `study-doc`
+- compact `prediction-pack`
+- 1 starter mock question
+- starter `score-report` rubric
 - 3-5 bilingual resume bullets
-- interviewer challenge checkpoints
 - next step for deeper drill-down
+
+## interview-journey
+
+Use when the user wants a staged workflow instead of one isolated output.
+
+Minimum deliverables:
+- stage 1: `study-doc`
+- stage 2: `prediction-pack`
+- stage 3: `mock` or `spoken-mock` kickoff
+- stage 4: `score-report` plan
+- optional stage 5: `resume`
 
 For very large repositories:
 - return a `full-loop-lite` first

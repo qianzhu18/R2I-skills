@@ -10,7 +10,7 @@ Related files:
 
 ## 1. Summary
 
-R2I Skill is a repo-to-career-story agent skill. It turns a GitHub repository URL, local codebase, or current workspace into an evidence-backed learning path, interviewer-tested project narrative, role-tailored interview prep pack, predicted question set, and resume-ready project story.
+R2I Skill is a repo-to-career-story agent skill. It turns a GitHub repository URL, local codebase, or current workspace into a development-doc-style learning pack, interviewer-tested project narrative, role-tailored interview prep pack, predicted question set, score report, and resume-ready project story.
 
 The product is not a web app. It is a portable agent skill designed to live inside skill-capable coding agents so users can reuse it across repeated repo analysis workflows with minimal setup.
 
@@ -40,13 +40,13 @@ Research completed on 2026-04-21 suggests the opportunity is real, but narrower 
 
 Therefore the production opportunity is not "another repo explainer" and not "another resume rewriter". It is an evidence-backed closed loop:
 
-`repo understanding -> learning order -> interviewer challenge -> honest resume bullets`
+`study-doc -> prediction-pack -> mock -> score-report -> honest resume bullets`
 
 ## 4. Objective
 
 ### Product objective
 
-Reduce the time between "I have a repository" and "I can explain this project confidently, survive follow-up questions, and write it up honestly" from hours to minutes.
+Reduce the time between "I have a repository" and "I can study it, survive follow-up questions, see my weak spots, and write it up honestly" from hours to minutes.
 
 ### Why this matters
 
@@ -120,16 +120,16 @@ The system should not only sound smart. It should separate:
 - suggested framing
 - metrics the user must verify
 
-3. Mode-based usability
+3. Stage-based usability
 
-The original draft required every run to generate every section. Production behavior should be mode-based:
-- quick scan
-- learn
-- interview
+The original draft required every run to generate every section. Production behavior should be stage-based:
+- study-doc
+- prediction-pack
+- mock / spoken-mock
+- score-report
 - resume
-- full loop
 
-This keeps first responses useful and avoids prompt bloat.
+This keeps the user in a clear training flow instead of a pile of disconnected outputs.
 
 4. Skill-native distribution
 
@@ -178,12 +178,15 @@ The skill should be packaged in an open, reusable format rather than locked to a
 
 1. User provides a repo URL, local path, or current repo context.
 2. User intent is inferred or explicitly requested:
+   - study-doc
    - learn
    - interview
    - prediction-pack
    - mock
    - spoken-mock
+   - score-report
    - resume
+   - interview-journey
    - full-loop
 3. Skill reads top-level repository evidence and builds a first-pass repo brief.
 4. Skill runs a compact mastery loop:
@@ -229,6 +232,17 @@ Should support:
 - interviewer checkpoint questions
 - what to ignore on first pass
 
+`study-doc`
+- Repo brief
+- product / user / business context
+- architecture and module map
+- request flow or core workflow
+- file reading order
+- key concepts glossary
+- common pitfalls
+- checkpoint questions
+- practice tasks
+
 `interview`
 - Repo brief
 - 10-15 repo-specific questions
@@ -254,6 +268,15 @@ Should support:
 - one question at a time
 - per-answer scoring and spoken coaching
 
+`score-report`
+- Score summary
+- dimension scores
+- strongest answer point
+- weakest dimensions
+- likely interviewer concerns
+- patch plan
+- next 3 questions to practice
+
 `resume`
 - Repo brief
 - 3-5 bilingual STAR-style bullets
@@ -264,9 +287,10 @@ Should support:
 
 `full-loop`
 - Repo brief
-- compact learning path
-- compact interview pack
+- compact study-doc
 - compact prediction pack
+- 1 starter mock question
+- starter score rubric
 - 3-5 bilingual resume bullets
 - interviewer challenge checkpoints
 - recommended next drill-down

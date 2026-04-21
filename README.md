@@ -2,9 +2,9 @@
 
 R2I = `Repo to Interview`.
 
-This repository hosts an agent skill that helps users turn a GitHub repo or local project into a reusable mastery loop:
+This repository hosts an agent skill that helps users turn a GitHub repo or local project into a reusable interview-training loop:
 
-`understand the project -> learn it actively -> survive interviewer follow-ups -> write honest resume bullets`
+`study the repo like a dev doc -> get a prediction pack -> run mock answers -> receive a score report -> write honest resume bullets`
 
 ## What This Skill Does
 
@@ -12,10 +12,12 @@ R2I is not just a repo summary prompt.
 
 It is designed to help a user:
 - read and understand an unfamiliar repository
-- build a practical learning path
+- turn the repository into a developer-learning document
 - tailor preparation to a target role and candidate profile
 - get challenged by an interviewer-style lens
 - get a role-specific prediction pack with likely blockers
+- practice one-question-at-a-time mock answers
+- receive a score report with patch actions
 - extract evidence-backed project stories and resume bullets
 
 ## Core Idea
@@ -35,11 +37,13 @@ Main skill:
 
 Supporting references:
 - `.agents/skills/r2i-skill/references/candidate-profile.md`
+- `.agents/skills/r2i-skill/references/learning-doc-playbook.md`
 - `.agents/skills/r2i-skill/references/mastery-loop.md`
 - `.agents/skills/r2i-skill/references/interview-engine.md`
 - `.agents/skills/r2i-skill/references/user-scenarios.md`
 - `.agents/skills/r2i-skill/references/evidence-and-honesty.md`
 - `.agents/skills/r2i-skill/references/output-modes.md`
+- `.agents/skills/r2i-skill/references/score-report.md`
 
 Product docs:
 - `PRD-r2i-skill-production.md`
@@ -49,12 +53,15 @@ Product docs:
 ## Output Modes
 
 - `quick-scan`: first-pass repo understanding
-- `learn`: learning order, concepts, tasks, and checkpoint questions
+- `study-doc`: development-doc-style learning manual
+- `learn`: compact learning mode
 - `interview`: project explanation, Q&A, and interviewer follow-ups
 - `prediction-pack`: role-specific likely questions, blockers, and patch list
 - `mock`: interactive text interview, one question at a time
 - `spoken-mock`: oral-practice mode, one question at a time
+- `score-report`: scoring summary and patch plan
 - `resume`: bilingual STAR bullets with evidence notes
+- `interview-journey`: staged workflow across study, prediction, mock, and scoring
 - `full-loop`: compact version of the whole path
 
 ## Candidate Inputs
@@ -77,15 +84,16 @@ Level: junior
 Background: 1 internship, mostly Python
 Repo relationship: I built this with a teammate
 Weak spots: system design and tradeoff questions
-Mode: prediction-pack
+Mode: study-doc
 ```
 
 ## Example Prompts
 
-- `Use $r2i-skill to analyze this repository and give me a full-loop output.`
-- `Use $r2i-skill to help me learn this repo step by step, then ask me interviewer-style follow-up questions.`
+- `Use $r2i-skill to convert this repository into a development learning doc for a junior backend engineer interview.`
+- `Use $r2i-skill to give me the full interview-journey for this repo.`
 - `Use $r2i-skill to generate a prediction-pack for a backend engineer interview based on this repo.`
 - `Use $r2i-skill to run a spoken-mock for a junior full-stack role and ask one question at a time.`
+- `Use $r2i-skill to generate a score-report for my last three answers in this thread.`
 - `Use $r2i-skill to turn this project into bilingual resume bullets, and tell me which claims are still weak.`
 - `Use $r2i-skill to act like an interviewer and pressure-test my explanation of this repo.`
 
@@ -96,6 +104,7 @@ Mode: prediction-pack
 - Learning before resume writing
 - Interviewer pressure before final bullets
 - Role-aware prep over generic question dumps
+- Stage-based training over disconnected modes
 
 ## Current Positioning
 

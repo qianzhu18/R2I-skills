@@ -1,6 +1,6 @@
 ---
 name: r2i-skill
-description: Analyze a GitHub repository URL, local repo path, or current codebase and turn it into an evidence-backed learning plan, role-tailored interview prep pack, predicted interviewer questions, and resume-ready project story. Use when the user wants to understand an unfamiliar repo, prepare for interviews for a specific role, pressure-test project claims, extract defensible STAR bullets from code, convert repository work into honest resume language, or asks for "R2I", "repo to interview", "仓库吃透", "项目上简历", "押题", "模拟面试", or similar outcomes.
+description: Analyze a GitHub repository URL, local repo path, or current codebase and turn it into a development-doc-style learning pack, role-tailored interview prep pack, predicted interviewer questions, mock interview flow, score report, and resume-ready project story. Use when the user wants to understand an unfamiliar repo, prepare for interviews for a specific role, pressure-test project claims, extract defensible STAR bullets from code, convert repository work into honest resume language, or asks for "R2I", "repo to interview", "仓库吃透", "项目上简历", "押题", "模拟面试", "学习文档", or similar outcomes.
 ---
 
 # R2I Skill
@@ -39,19 +39,23 @@ If the user does not specify a mode, infer it from intent and continue without a
 
 Mode cues:
 - "吃透", "学习", "看懂", "onboard" -> `learn`
+- "学习文档", "开发文档", "文档化学习" -> `study-doc`
 - "面试", "怎么讲", "mock", "Q&A" -> `interview`
 - "模拟面试", "口语面试", "一问一答", "spoken mock" -> `spoken-mock`
 - "押题", "高频题", "关键卡点", "prediction" -> `prediction-pack`
+- "评分", "复盘", "评分报告", "score" -> `score-report`
 - "简历", "bullet", "STAR", "项目经历" -> `resume`
-- "分析这个仓库", "R2I", "full loop" -> `full-loop`
+- "分析这个仓库", "R2I", "full loop", "全流程", "训练营" -> `interview-journey`
 
 Before writing the answer, read:
 - `references/candidate-profile.md`
 - `references/user-scenarios.md`
 - `references/interview-engine.md`
 - `references/evidence-and-honesty.md`
+- `references/learning-doc-playbook.md`
 - `references/mastery-loop.md`
 - `references/output-modes.md`
+- `references/score-report.md`
 
 ## Workflow
 
@@ -107,15 +111,16 @@ Always produce a "predicted key blockers" view for interview-oriented work:
 - what the user can probably answer
 - what claims are still weak or risky
 
-### 5. Run the mastery loop
+### 5. Run the stage-based mastery loop
 
 Use `references/mastery-loop.md`.
 
-The default loop is:
-1. Map the repository
-2. Choose what to learn first
-3. Let an interviewer challenge the user's understanding
-4. Convert the strongest defensible material into resume language
+The default training journey is:
+1. `study-doc`: convert the repo into a development-doc-style learning pack
+2. `prediction-pack`: turn that understanding into likely questions, blockers, and trap points
+3. `mock` or `spoken-mock`: simulate one-question-at-a-time answers
+4. `score-report`: summarize scores, weak spots, and the next patch plan
+5. `resume`: convert only the strongest defended material into resume language
 
 If the user asks only for resume output, still run a compressed version of steps 1 and 3 internally before drafting bullets.
 
@@ -136,13 +141,15 @@ Use `references/output-modes.md` to select the correct deliverables.
 
 Default behavior:
 - `quick-scan`: repo brief plus risks, standout files, and next questions
-- `learn`: repo brief plus learning path, file reading order, practice tasks, and interviewer checkpoints
+- `study-doc`: repo brief plus a development-doc-style learning pack
+- `learn`: repo brief plus a compact development-doc-style learning path, practice tasks, and interviewer checkpoints
 - `interview`: repo brief plus role-aware interview Q&A, interviewer follow-ups, and speaking scripts
 - `prediction-pack`: role-aware predicted questions, key blockers, must-know topics, and red flags
 - `mock`: interactive one-question-at-a-time interview with feedback after each answer
 - `spoken-mock`: oral-style mock interview optimized for speaking practice, not long text dumps
+- `score-report`: score summary, weak-answer analysis, and patch plan
 - `resume`: repo brief plus bilingual STAR bullets, evidence notes, and interviewer challenge questions
-- `full-loop`: compact versions of learn, interview, and resume outputs connected by the mastery loop
+- `interview-journey`: four-stage flow of study-doc -> prediction-pack -> mock -> score-report
 
 Prefer concise, directly usable outputs over long narrative dumps.
 
@@ -152,6 +159,11 @@ For `mock` and `spoken-mock`:
 - do not dump the entire answer key first
 - after each answer, score the response and then ask the next question
 - if the user only wants the question list, switch to `prediction-pack`
+
+For `score-report`:
+- summarize scores across the answers already given in the thread when available
+- if there is only one answer so far, score that answer and provide a mini report
+- always end with the next 3 highest-value questions to practice
 
 ## Quality Bar
 
@@ -168,6 +180,8 @@ Follow these rules on every run:
 - Prioritize the most likely interview traps over sheer question quantity.
 - Tailor question difficulty to the target level; do not ask staff-level architecture questions to an intern by default.
 - If true voice interaction is unavailable in the host tool, run `spoken-mock` as a text-guided oral practice mode.
+- In `study-doc`, write like an internal developer learning document, not like marketing copy.
+- In `score-report`, coach the user toward the next improvement step instead of only judging the past answer.
 
 ## Response Pattern
 
@@ -190,6 +204,23 @@ When `prediction-pack` mode is selected, include:
 3. red-flag follow-ups
 4. topics to patch before the interview
 
+When `study-doc` mode is selected, structure the output like onboarding documentation:
+1. repo brief
+2. product / user / business context
+3. architecture and module map
+4. request or data flow
+5. file reading order
+6. key concepts glossary
+7. common pitfalls and checkpoint questions
+8. practice tasks
+
+When `score-report` mode is selected, include:
+1. score summary
+2. strongest answer
+3. weakest dimensions
+4. likely interviewer concerns
+5. next patch plan
+
 ## What Good Looks Like
 
 Strong output:
@@ -198,6 +229,8 @@ Strong output:
 - uses interviewer pressure to expose weak claims before they reach the resume
 - adapts the question set to the target role and candidate reality
 - identifies the likely choke points before the interviewer does
+- turns code understanding into a real learning document before asking interview questions
+- gives the user a staged path instead of a pile of disconnected sections
 - gives the user something they can reuse immediately
 
 Weak output:
