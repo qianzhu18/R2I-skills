@@ -1,4 +1,4 @@
 interface:
   display_name: "R2I Skill"
   short_description: "Turn repos into learning, interview, and resume output"
-  default_prompt: "Use $r2i-skill to analyze this repository and turn it into a learning plan, interview prep pack, and resume-ready bullets."
+  default_prompt: "Use $r2i-skill to analyze this repository for my target role and turn it into a learning plan, prediction pack, and resume-ready bullets."

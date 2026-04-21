@@ -10,7 +10,7 @@ Related files:
 
 ## 1. Summary
 
-R2I Skill is a repo-to-career-story agent skill. It turns a GitHub repository URL, local codebase, or current workspace into an evidence-backed learning path, interviewer-tested project narrative, interview prep pack, and resume-ready project story.
+R2I Skill is a repo-to-career-story agent skill. It turns a GitHub repository URL, local codebase, or current workspace into an evidence-backed learning path, interviewer-tested project narrative, role-tailored interview prep pack, predicted question set, and resume-ready project story.
 
 The product is not a web app. It is a portable agent skill designed to live inside skill-capable coding agents so users can reuse it across repeated repo analysis workflows with minimal setup.
 
@@ -180,6 +180,9 @@ The skill should be packaged in an open, reusable format rather than locked to a
 2. User intent is inferred or explicitly requested:
    - learn
    - interview
+   - prediction-pack
+   - mock
+   - spoken-mock
    - resume
    - full-loop
 3. Skill reads top-level repository evidence and builds a first-pass repo brief.
@@ -204,6 +207,9 @@ Should support:
 - optional target role
 - optional job description
 - optional seniority level
+- optional candidate background
+- optional repo relationship
+- optional weak spots
 - optional language preference
 
 #### Output mode requirements
@@ -230,6 +236,24 @@ Should support:
 - likely interviewer follow-up questions
 - 1-minute and 3-minute explanation scripts
 
+`prediction-pack`
+- Repo brief
+- role-aware high-frequency questions
+- predicted key blockers
+- red-flag follow-up questions
+- short study patch list
+
+`mock`
+- Candidate profile line
+- one question at a time
+- per-answer scoring and feedback
+
+`spoken-mock`
+- Candidate profile line
+- oral-style question flow
+- one question at a time
+- per-answer scoring and spoken coaching
+
 `resume`
 - Repo brief
 - 3-5 bilingual STAR-style bullets
@@ -242,6 +266,7 @@ Should support:
 - Repo brief
 - compact learning path
 - compact interview pack
+- compact prediction pack
 - 3-5 bilingual resume bullets
 - interviewer challenge checkpoints
 - recommended next drill-down
@@ -340,7 +365,7 @@ Do not include in MVP:
 - certificate generation
 - multi-repo batch analysis
 - automatic LinkedIn or DOCX export
-- voice mock interview
+- true native voice interview
 
 ### Post-MVP
 

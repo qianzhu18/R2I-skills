@@ -9,6 +9,7 @@ All modes should:
 - stay compact on first pass
 - separate facts from inference
 - offer a next action or follow-up path
+- adapt to target role and candidate profile when interview stakes are involved
 
 ## quick-scan
 
@@ -44,6 +45,41 @@ Minimum deliverables:
 - common traps or interviewer follow-up questions
 - 1-minute and 3-minute project explanation scripts
 
+## prediction-pack
+
+Use when the user wants "押题", "高频题", "关键卡点", or a concentrated pre-interview pack.
+
+Minimum deliverables:
+- repo brief
+- target role and assumption line
+- 10-15 likely high-frequency questions
+- predicted key blockers
+- red-flag follow-up questions
+- fastest study patch list
+
+## mock
+
+Use when the user wants an interactive simulation.
+
+Minimum deliverables:
+- candidate profile line
+- exactly one question at a time
+- answer evaluation rubric
+- one improvement tip per turn
+
+Do not dump the full script unless explicitly asked.
+
+## spoken-mock
+
+Use when the user wants oral practice.
+
+Minimum deliverables:
+- candidate profile line
+- one spoken-style question at a time
+- guidance to answer aloud in 1-3 minutes
+- response scoring after each answer
+- next question only after the user responds
+
 ## resume
 
 Use when the user wants career-facing output.
@@ -64,6 +100,7 @@ Minimum deliverables:
 - repo brief
 - compact learning path
 - compact interview pack
+- compact prediction pack
 - 3-5 bilingual resume bullets
 - interviewer challenge checkpoints
 - next step for deeper drill-down
