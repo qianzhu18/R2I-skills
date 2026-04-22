@@ -72,11 +72,21 @@ Product docs:
 
 `study-doc` can now be previewed on a localhost port inside Codex app or Claude Code workflows.
 
+The preferred preview format is a docs bundle, not one giant markdown page. The current learning-doc shape is:
+
+- `00-overview.md`
+- `01-quick-start.md`
+- `02-system-map.md`
+- `03-key-flows.md`
+- `04-reading-path.md`
+- `05-checklist.md`
+- `06-pitfalls-and-faq.md`
+
 Example:
 
 ```bash
 python3 .agents/skills/r2i-skill/scripts/serve_study_doc.py \
-  --input examples/aut-sci-write-study-doc.md \
+  --input examples/aut-sci-write-docs \
   --port 4173
 ```
 
@@ -85,6 +95,10 @@ Then open:
 ```text
 http://127.0.0.1:4173
 ```
+
+The preview script accepts either:
+- a directory of markdown pages
+- a single markdown file
 
 This is the intended bridge between "the model generated a learning document" and "the user can actually read it like a local doc site".
 

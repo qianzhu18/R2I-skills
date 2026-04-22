@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-"""Build and serve a local preview for an R2I study-doc markdown file."""
+"""Build and serve a local preview for an R2I study-doc markdown file or docs bundle."""
 
 from __future__ import annotations
 
 import argparse
 import html
 import http.server
-import os
 import re
 import socketserver
 import sys
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, List
 
@@ -25,7 +25,7 @@ CSS = """
   --accent-soft: #dfecef;
   --code: #f3ede2;
   --shadow: 0 20px 40px rgba(27, 39, 45, 0.08);
-  --max: 1180px;
+  --max: 1320px;
 }
 
 * { box-sizing: border-box; }
@@ -63,7 +63,7 @@ body {
 
 .hero h1 {
   margin: 0 0 12px;
-  font-size: clamp(32px, 5vw, 52px);
+  font-size: clamp(30px, 5vw, 48px);
   line-height: 1.05;
   letter-spacing: -0.03em;
 }
@@ -93,20 +93,13 @@ body {
 
 .layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 270px;
-  gap: 24px;
+  grid-template-columns: 270px minmax(0, 1fr) 250px;
+  gap: 22px;
   margin-top: 26px;
   align-items: start;
 }
 
-.doc {
-  background: var(--panel);
-  border: 1px solid rgba(216, 205, 184, 0.72);
-  border-radius: 24px;
-  padding: 34px;
-  box-shadow: var(--shadow);
-}
-
+.nav,
 .toc {
   position: sticky;
   top: 20px;
@@ -118,58 +111,86 @@ body {
   box-shadow: var(--shadow);
 }
 
+.doc {
+  background: var(--panel);
+  border: 1px solid rgba(216, 205, 184, 0.72);
+  border-radius: 24px;
+  padding: 34px;
+  box-shadow: var(--shadow);
+}
+
+.nav h2,
 .toc h2 {
   margin: 0 0 14px;
   font: 700 15px/1.2 ui-sans-serif, system-ui, sans-serif;
   letter-spacing: 0.02em;
 }
 
+.nav-section,
 .toc-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
+.nav a,
 .toc a {
   color: var(--accent);
   text-decoration: none;
   font: 500 14px/1.45 ui-sans-serif, system-ui, sans-serif;
+  border-radius: 12px;
+  padding: 8px 10px;
 }
 
-.toc a:hover { text-decoration: underline; }
+.nav a.active {
+  background: var(--accent-soft);
+  color: #1d2b31;
+  font-weight: 700;
+}
 
-.doc h1, .doc h2, .doc h3, .doc h4 {
+.nav a:hover,
+.toc a:hover {
+  text-decoration: underline;
+}
+
+.doc h1,
+.doc h2,
+.doc h3,
+.doc h4 {
   color: var(--ink);
   letter-spacing: -0.02em;
 }
 
 .doc h1 {
-  font-size: 2.2rem;
+  font-size: 2.15rem;
   margin-top: 0;
   margin-bottom: 1rem;
 }
 
 .doc h2 {
   font-size: 1.6rem;
-  margin-top: 2.8rem;
+  margin-top: 2.5rem;
   margin-bottom: 0.8rem;
   border-bottom: 1px solid var(--line);
   padding-bottom: 0.45rem;
 }
 
 .doc h3 {
-  font-size: 1.25rem;
-  margin-top: 2rem;
+  font-size: 1.22rem;
+  margin-top: 1.8rem;
   margin-bottom: 0.55rem;
 }
 
-.doc p, .doc li, .doc blockquote {
+.doc p,
+.doc li,
+.doc blockquote {
   font-size: 17px;
   line-height: 1.8;
 }
 
 .doc p { margin: 0.7rem 0 1rem; }
-.doc ul, .doc ol { padding-left: 1.4rem; }
+.doc ul,
+.doc ol { padding-left: 1.4rem; }
 .doc li { margin: 0.25rem 0; }
 
 .doc blockquote {
@@ -211,17 +232,32 @@ body {
   text-align: center;
 }
 
-@media (max-width: 980px) {
+@media (max-width: 1100px) {
   .layout { grid-template-columns: 1fr; }
-  .toc { position: static; order: -1; }
+  .nav,
+  .toc { position: static; }
   .doc { padding: 24px 20px; }
 }
 """
 
 
+@dataclass
+class PageInfo:
+    source_path: Path
+    output_name: str
+    title: str
+    headings: List[tuple[int, str, str]]
+
+
 def slugify(text: str) -> str:
     slug = re.sub(r"[^a-zA-Z0-9\u4e00-\u9fff]+", "-", text.strip()).strip("-").lower()
     return slug or "section"
+
+
+def prettify_stem(stem: str) -> str:
+    stem = re.sub(r"^\d+[-_ ]*", "", stem)
+    stem = stem.replace("-", " ").replace("_", " ").strip()
+    return stem.title() if stem else "Untitled"
 
 
 def apply_inline(text: str) -> str:
@@ -267,9 +303,7 @@ def render_markdown(markdown_text: str) -> str:
             flush_lists()
             if in_code:
                 blocks.append(
-                    "<pre><code>"
-                    + html.escape("\n".join(code_lines))
-                    + "</code></pre>"
+                    "<pre><code>" + html.escape("\n".join(code_lines)) + "</code></pre>"
                 )
                 code_lines = []
                 in_code = False
@@ -305,14 +339,16 @@ def render_markdown(markdown_text: str) -> str:
         bullet_match = re.match(r"^[-*]\s+(.*)$", stripped)
         if bullet_match:
             flush_paragraph()
-            flush_lists() if ordered_items else None
+            if ordered_items:
+                flush_lists()
             list_items.append(bullet_match.group(1).strip())
             continue
 
         ordered_match = re.match(r"^\d+\.\s+(.*)$", stripped)
         if ordered_match:
             flush_paragraph()
-            flush_lists() if list_items else None
+            if list_items:
+                flush_lists()
             ordered_items.append(ordered_match.group(1).strip())
             continue
 
@@ -339,15 +375,55 @@ def extract_headings(markdown_text: str) -> List[tuple[int, str, str]]:
     return headings
 
 
-def build_html(markdown_path: Path, title: str | None = None) -> str:
-    markdown_text = markdown_path.read_text(encoding="utf-8")
-    body = render_markdown(markdown_text)
-    doc_title = title or markdown_path.stem.replace("-", " ").replace("_", " ")
+def first_heading(markdown_text: str) -> str | None:
     headings = extract_headings(markdown_text)
+    return headings[0][1] if headings else None
+
+
+def discover_pages(input_path: Path) -> List[PageInfo]:
+    if input_path.is_file():
+        text = input_path.read_text(encoding="utf-8")
+        return [
+            PageInfo(
+                source_path=input_path,
+                output_name="index.html",
+                title=first_heading(text) or prettify_stem(input_path.stem),
+                headings=extract_headings(text),
+            )
+        ]
+
+    markdown_files = sorted(
+        path for path in input_path.iterdir() if path.is_file() and path.suffix.lower() == ".md"
+    )
+    pages: List[PageInfo] = []
+    for idx, markdown_path in enumerate(markdown_files):
+        text = markdown_path.read_text(encoding="utf-8")
+        output_name = "index.html" if idx == 0 else f"{markdown_path.stem}.html"
+        pages.append(
+            PageInfo(
+                source_path=markdown_path,
+                output_name=output_name,
+                title=first_heading(text) or prettify_stem(markdown_path.stem),
+                headings=extract_headings(text),
+            )
+        )
+    return pages
+
+
+def build_html(page: PageInfo, pages: List[PageInfo], source_label: str, title: str | None = None) -> str:
+    markdown_text = page.source_path.read_text(encoding="utf-8")
+    body = render_markdown(markdown_text)
+    doc_title = title or page.title
+
+    page_links = "\n".join(
+        f'<a href="{info.output_name}" class="{"active" if info.output_name == page.output_name else ""}">{html.escape(info.title)}</a>'
+        for info in pages
+    ) or '<span style="color: var(--muted); font: 500 14px/1.5 ui-sans-serif, system-ui, sans-serif;">No pages found.</span>'
+
     toc_items = "\n".join(
         f'<a href="#{anchor}" style="padding-left:{max(level - 1, 0) * 12}px">{html.escape(text)}</a>'
-        for level, text, anchor in headings
-    ) or '<span style="color: var(--muted); font: 500 14px/1.5 ui-sans-serif, system-ui, sans-serif;">No headings yet.</span>'
+        for level, text, anchor in page.headings
+    ) or '<span style="color: var(--muted); font: 500 14px/1.5 ui-sans-serif, system-ui, sans-serif;">No headings on this page.</span>'
 
     return f"""<!doctype html>
 <html lang="zh-CN">
@@ -362,16 +438,20 @@ def build_html(markdown_path: Path, title: str | None = None) -> str:
     <section class="hero">
       <div class="eyebrow">R2I Study Doc Preview</div>
       <h1>{html.escape(doc_title)}</h1>
-      <p>本地预览端口已经启动。这个页面用于在 Codex / Claude Code 工作流里快速浏览学习文档、检查结构、继续进入押题和模拟面试阶段。</p>
+      <p>这个本地端口现在会优先按多页学习文档来预览，结构更接近 onboarding docs / repo wiki，而不是把全部内容堆在一页里。</p>
       <div class="meta">
-        <div class="pill">Source: {html.escape(str(markdown_path))}</div>
-        <div class="pill">Auto-refresh on reload</div>
+        <div class="pill">Source: {html.escape(source_label)}</div>
+        <div class="pill">Current page: {html.escape(page.source_path.name)}</div>
       </div>
     </section>
     <div class="layout">
+      <aside class="nav">
+        <h2>学习路径</h2>
+        <div class="nav-section">{page_links}</div>
+      </aside>
       <article class="doc">{body}</article>
       <aside class="toc">
-        <h2>目录</h2>
+        <h2>本页目录</h2>
         <div class="toc-list">{toc_items}</div>
       </aside>
     </div>
@@ -381,83 +461,92 @@ def build_html(markdown_path: Path, title: str | None = None) -> str:
 </html>"""
 
 
-def write_preview(markdown_path: Path, output_dir: Path, title: str | None = None) -> Path:
+def write_preview(input_path: Path, output_dir: Path, title: str | None = None) -> Path:
     output_dir.mkdir(parents=True, exist_ok=True)
-    html_path = output_dir / "index.html"
-    html_path.write_text(build_html(markdown_path, title=title), encoding="utf-8")
-    return html_path
+    pages = discover_pages(input_path)
+    if not pages:
+        raise FileNotFoundError(f"No markdown pages found under {input_path}")
+
+    source_label = str(input_path)
+    for page in pages:
+        html_path = output_dir / page.output_name
+        html_path.write_text(build_html(page, pages, source_label, title=title), encoding="utf-8")
+    return output_dir / "index.html"
 
 
 class PreviewHandler(http.server.SimpleHTTPRequestHandler):
-    def __init__(self, *args, directory: str, markdown_path: Path, title: str | None, **kwargs):
-        self.markdown_path = markdown_path
+    def __init__(self, *args, directory: str, source_path: Path, title: str | None, **kwargs):
+        self.source_path = source_path
         self.title = title
         super().__init__(*args, directory=directory, **kwargs)
 
     def do_GET(self) -> None:
-        if self.path in {"/", "/index.html"}:
-            write_preview(self.markdown_path, Path(self.directory), self.title)
+        request_path = self.path.split("?", 1)[0]
+        if request_path == "/" or request_path.endswith(".html"):
+            write_preview(self.source_path, Path(self.directory), self.title)
         super().do_GET()
 
     def log_message(self, fmt: str, *args) -> None:
         sys.stdout.write("[preview] " + fmt % args + "\n")
 
 
-def serve(markdown_path: Path, output_dir: Path, host: str, port: int, title: str | None) -> None:
-    write_preview(markdown_path, output_dir, title)
+def serve(input_path: Path, output_dir: Path, host: str, port: int, title: str | None) -> None:
+    write_preview(input_path, output_dir, title)
     handler = lambda *args, **kwargs: PreviewHandler(
         *args,
         directory=str(output_dir),
-        markdown_path=markdown_path,
+        source_path=input_path,
         title=title,
         **kwargs,
     )
     with socketserver.TCPServer((host, port), handler) as httpd:
         url = f"http://{host}:{port}"
         print(f"Preview ready at {url}")
-        print(f"Serving markdown source: {markdown_path}")
+        print(f"Serving source: {input_path}")
         print("Press Ctrl+C to stop.")
         httpd.serve_forever()
 
 
 def parse_args(argv: Iterable[str]) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Serve a local preview for a study-doc markdown file.")
-    parser.add_argument("--input", required=True, help="Path to the markdown file to preview.")
+    parser = argparse.ArgumentParser(
+        description="Serve a local preview for a study-doc markdown file or a docs bundle directory."
+    )
+    parser.add_argument("--input", required=True, help="Path to a markdown file or a directory of markdown pages.")
     parser.add_argument("--port", type=int, default=4173, help="Local port to serve on.")
     parser.add_argument("--host", default="127.0.0.1", help="Host to bind to. Default: 127.0.0.1")
     parser.add_argument("--title", help="Optional page title override.")
     parser.add_argument(
         "--output-dir",
-        help="Directory to place generated preview assets. Default: .r2i-preview/<markdown-stem>",
+        help="Directory to place generated preview assets. Default: .r2i-preview/<input-name>",
     )
     parser.add_argument(
         "--build-only",
         action="store_true",
-        help="Build index.html and exit without starting a server.",
+        help="Build html files and exit without starting a server.",
     )
     return parser.parse_args(list(argv))
 
 
 def main(argv: Iterable[str]) -> int:
     args = parse_args(argv)
-    markdown_path = Path(args.input).expanduser().resolve()
-    if not markdown_path.exists():
-        print(f"Markdown file not found: {markdown_path}", file=sys.stderr)
+    input_path = Path(args.input).expanduser().resolve()
+    if not input_path.exists():
+        print(f"Input path not found: {input_path}", file=sys.stderr)
         return 1
 
     output_dir = (
         Path(args.output_dir).expanduser().resolve()
         if args.output_dir
-        else Path.cwd() / ".r2i-preview" / markdown_path.stem
+        else Path.cwd() / ".r2i-preview" / input_path.stem
     )
 
     if args.build_only:
-        html_path = write_preview(markdown_path, output_dir, title=args.title)
+        html_path = write_preview(input_path, output_dir, title=args.title)
         print(f"Preview built at {html_path}")
         return 0
 
     try:
-        serve(markdown_path, output_dir, args.host, args.port, args.title)
+        serve(input_path, output_dir, args.host, args.port, args.title)
     except KeyboardInterrupt:
         print("\nPreview server stopped.")
     return 0

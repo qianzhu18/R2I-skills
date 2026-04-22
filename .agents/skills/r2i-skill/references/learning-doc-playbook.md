@@ -15,37 +15,43 @@ Do not just summarize code. Turn the repository into a study document that helps
 
 ## Preferred Structure
 
-### 1. Repo brief
+Research note:
+- current onboarding-style skills and repo wiki generators tend to use a small set of operational pages rather than one long essay
+- common patterns are overview, quick start, system map, key flows, reading path, checklist, and pitfalls
+
+Prefer a docs bundle with these pages:
+
+### 00-overview.md
 
 State:
 - what the repository appears to do
-- the likely target users
-- the likely business or product value
-- what level of certainty you have
+- who it serves
+- why it matters
+- confidence level and major unknowns
 
-### 2. Product and scenario context
+### 01-quick-start.md
 
-Explain:
-- who this project seems built for
-- what user problem it solves
-- in what scenarios it is used
-- what success might look like for the product
+State:
+- how to run or verify the project quickly
+- what prerequisites exist
+- what commands matter first
+- how a learner knows the environment is working
 
-If not explicit, mark this as inference.
+Keep setup executable and time-bounded.
 
-### 3. Architecture and module map
+### 02-system-map.md
 
 Show:
 - top-level architecture shape
-- major modules and their responsibilities
+- major modules and responsibilities
 - important dependencies or services
-- boundaries between frontend, backend, data, infra, or agent layers when relevant
+- a file map for the most important areas
 
 Use Mermaid only if the system boundaries are clear enough.
 
-### 4. Request flow or core workflow
+### 03-key-flows.md
 
-Describe the most important path through the system:
+Describe the most important request, data, or user workflow:
 - user action
 - entrypoint
 - key modules crossed
@@ -53,7 +59,7 @@ Describe the most important path through the system:
 
 This helps users move from file-level understanding to system-level understanding.
 
-### 5. Reading order
+### 04-reading-path.md
 
 Give a practical reading path:
 - where to start
@@ -63,33 +69,24 @@ Give a practical reading path:
 
 The goal is to reduce overwhelm.
 
-### 6. Concepts and glossary
+### 05-checklist.md
 
-List the domain terms, patterns, and abstractions a learner must understand.
+Include:
+- key concepts glossary
+- verification questions
+- hands-on exercises
+- "I understand this if..." checks
 
-Examples:
-- framework concepts
-- domain entities
-- internal service names
-- agent/tool vocabulary
+### 06-pitfalls-and-faq.md
 
-### 7. Pitfalls and checkpoint questions
-
-Call out the likely confusion points:
+Call out likely confusion points:
 - hidden coupling
 - naming traps
 - config gotchas
 - misleading architecture assumptions
+- common wrong explanations
 
-Add 3-5 checkpoint questions to verify understanding before the user moves to interview prep.
-
-### 8. Practice tasks
-
-Provide tasks in increasing difficulty:
-- trace a flow
-- change a small behavior
-- extend a module
-- explain a tradeoff
+If the user does not ask for a multi-page docs bundle, you may compress these pages into one concise markdown document while preserving the same order.
 
 ## Writing Rules
 
@@ -98,3 +95,4 @@ Provide tasks in increasing difficulty:
 - Avoid hype, fluff, and motivational filler.
 - Separate facts from inference.
 - Keep the first-pass document scannable.
+- Prefer docs-bundle navigation over giant single-page dumps when preview is requested.

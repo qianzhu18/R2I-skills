@@ -168,7 +168,7 @@ For `score-report`:
 
 If the user asks for local preview, browser preview, localhost preview, or a study-doc page:
 - use `references/preview-workflow.md`
-- save the generated `study-doc` as a markdown file
+- save the generated `study-doc` as a docs bundle when possible
 - run `${SKILL_DIR}/scripts/serve_study_doc.py`
 - return the localhost URL instead of only pasting markdown into chat
 
@@ -211,18 +211,19 @@ When `prediction-pack` mode is selected, include:
 3. red-flag follow-ups
 4. topics to patch before the interview
 
-When `study-doc` mode is selected, structure the output like onboarding documentation:
-1. repo brief
-2. product / user / business context
-3. architecture and module map
-4. request or data flow
-5. file reading order
-6. key concepts glossary
-7. common pitfalls and checkpoint questions
-8. practice tasks
+When `study-doc` mode is selected, prefer the onboarding docs bundle structure from `references/learning-doc-playbook.md`:
+1. `00-overview`
+2. `01-quick-start`
+3. `02-system-map`
+4. `03-key-flows`
+5. `04-reading-path`
+6. `05-checklist`
+7. `06-pitfalls-and-faq`
+
+If the host only allows a single response, keep the same order in one compact markdown document instead of inventing a different structure.
 
 When `study-doc` mode is selected and the user asks for preview:
-1. write the markdown file locally
+1. write the docs bundle locally
 2. start the preview server
 3. share the localhost URL
 
