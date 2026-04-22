@@ -55,6 +55,7 @@ Before writing the answer, read:
 - `references/learning-doc-playbook.md`
 - `references/mastery-loop.md`
 - `references/output-modes.md`
+- `references/preview-workflow.md`
 - `references/score-report.md`
 
 ## Workflow
@@ -165,6 +166,12 @@ For `score-report`:
 - if there is only one answer so far, score that answer and provide a mini report
 - always end with the next 3 highest-value questions to practice
 
+If the user asks for local preview, browser preview, localhost preview, or a study-doc page:
+- use `references/preview-workflow.md`
+- save the generated `study-doc` as a markdown file
+- run `${SKILL_DIR}/scripts/serve_study_doc.py`
+- return the localhost URL instead of only pasting markdown into chat
+
 ## Quality Bar
 
 Follow these rules on every run:
@@ -213,6 +220,11 @@ When `study-doc` mode is selected, structure the output like onboarding document
 6. key concepts glossary
 7. common pitfalls and checkpoint questions
 8. practice tasks
+
+When `study-doc` mode is selected and the user asks for preview:
+1. write the markdown file locally
+2. start the preview server
+3. share the localhost URL
 
 When `score-report` mode is selected, include:
 1. score summary

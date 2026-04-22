@@ -43,7 +43,11 @@ Supporting references:
 - `.agents/skills/r2i-skill/references/user-scenarios.md`
 - `.agents/skills/r2i-skill/references/evidence-and-honesty.md`
 - `.agents/skills/r2i-skill/references/output-modes.md`
+- `.agents/skills/r2i-skill/references/preview-workflow.md`
 - `.agents/skills/r2i-skill/references/score-report.md`
+
+Preview script:
+- `.agents/skills/r2i-skill/scripts/serve_study_doc.py`
 
 Product docs:
 - `PRD-r2i-skill-production.md`
@@ -63,6 +67,26 @@ Product docs:
 - `resume`: bilingual STAR bullets with evidence notes
 - `interview-journey`: staged workflow across study, prediction, mock, and scoring
 - `full-loop`: compact version of the whole path
+
+## Local Preview
+
+`study-doc` can now be previewed on a localhost port inside Codex app or Claude Code workflows.
+
+Example:
+
+```bash
+python3 .agents/skills/r2i-skill/scripts/serve_study_doc.py \
+  --input examples/aut-sci-write-study-doc.md \
+  --port 4173
+```
+
+Then open:
+
+```text
+http://127.0.0.1:4173
+```
+
+This is the intended bridge between "the model generated a learning document" and "the user can actually read it like a local doc site".
 
 ## Candidate Inputs
 

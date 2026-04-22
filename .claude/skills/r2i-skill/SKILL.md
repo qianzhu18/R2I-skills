@@ -14,6 +14,7 @@ Use the repository-backed skill instructions and references below as the source 
 - `../../../.agents/skills/r2i-skill/references/evidence-and-honesty.md`
 - `../../../.agents/skills/r2i-skill/references/mastery-loop.md`
 - `../../../.agents/skills/r2i-skill/references/output-modes.md`
+- `../../../.agents/skills/r2i-skill/references/preview-workflow.md`
 - `../../../.agents/skills/r2i-skill/references/score-report.md`
 
 When invoked in Claude Code:
