@@ -1,0 +1,46 @@
+bundle_name: "<repo-slug>-study-doc"
+mode: "study-doc"
+pages:
+  - file: "00-overview.md"
+    purpose: "repo identity, audience, value, confidence, track selection"
+    required_signals:
+      - "what the repo is"
+      - "who it serves"
+      - "why it matters"
+      - "confidence or uncertainty"
+  - file: "01-quick-start.md"
+    purpose: "fast verification path"
+    required_signals:
+      - "prerequisites"
+      - "first commands"
+      - "success signal"
+  - file: "02-system-map.md"
+    purpose: "architecture and source-of-truth map"
+    required_signals:
+      - "major modules"
+      - "repo structure lens"
+      - "source vs generated distinction"
+  - file: "03-key-flows.md"
+    purpose: "main workflow plus drill-downs"
+    required_signals:
+      - "main flow"
+      - "why it matters"
+      - "drill-down candidates"
+  - file: "04-reading-path.md"
+    purpose: "ordered reading lanes"
+    required_signals:
+      - "start here"
+      - "defer or ignore"
+      - "learner contributor interviewer lanes"
+  - file: "05-checklist.md"
+    purpose: "verification and exercises"
+    required_signals:
+      - "checkpoint questions"
+      - "practice tasks"
+      - "safe change ideas"
+  - file: "06-pitfalls-and-faq.md"
+    purpose: "misread protection"
+    required_signals:
+      - "common misreads"
+      - "interview traps"
+      - "generated or secondary file warning"

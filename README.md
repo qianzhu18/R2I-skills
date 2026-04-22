@@ -37,6 +37,7 @@ Main skill:
 
 Supporting references:
 - `.agents/skills/r2i-skill/references/candidate-profile.md`
+- `.agents/skills/r2i-skill/references/evidence-rubric.md`
 - `.agents/skills/r2i-skill/references/github-learning-patterns.md`
 - `.agents/skills/r2i-skill/references/learning-doc-playbook.md`
 - `.agents/skills/r2i-skill/references/mastery-loop.md`
@@ -46,14 +47,25 @@ Supporting references:
 - `.agents/skills/r2i-skill/references/output-modes.md`
 - `.agents/skills/r2i-skill/references/preview-workflow.md`
 - `.agents/skills/r2i-skill/references/score-report.md`
+- `.agents/skills/r2i-skill/references/study-doc-production.md`
 
 Preview script:
 - `.agents/skills/r2i-skill/scripts/serve_study_doc.py`
+- `.agents/skills/r2i-skill/scripts/repo_doc_verify.py`
+
+Supporting assets:
+- `.agents/skills/r2i-skill/assets/study-doc-plan-template.yaml`
 
 Product docs:
 - `PRD-r2i-skill-production.md`
 - `R2I-research-notes.md`
 - `R2Iprd.md`
+
+Project docs:
+- `docs/QUICKSTART.md`
+- `docs/ARCHITECTURE.md`
+- `docs/CONTRIBUTING.md`
+- `docs/EXAMPLES.md`
 
 ## Output Modes
 
@@ -102,6 +114,20 @@ The preview script accepts either:
 - a single markdown file
 
 This is the intended bridge between "the model generated a learning document" and "the user can actually read it like a local doc site".
+
+Validate a study-doc bundle:
+
+```bash
+python3 .agents/skills/r2i-skill/scripts/repo_doc_verify.py \
+  --input examples/aut-sci-write-docs
+```
+
+See the project docs for contributor-facing setup and examples:
+
+- `docs/QUICKSTART.md`
+- `docs/ARCHITECTURE.md`
+- `docs/CONTRIBUTING.md`
+- `docs/EXAMPLES.md`
 
 ## Research Basis
 

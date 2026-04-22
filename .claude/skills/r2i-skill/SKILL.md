@@ -8,6 +8,7 @@ This is the Claude Code entrypoint for the shared R2I skill.
 Use the repository-backed skill instructions and references below as the source of truth:
 - `../../../.agents/skills/r2i-skill/SKILL.md`
 - `../../../.agents/skills/r2i-skill/references/candidate-profile.md`
+- `../../../.agents/skills/r2i-skill/references/evidence-rubric.md`
 - `../../../.agents/skills/r2i-skill/references/github-learning-patterns.md`
 - `../../../.agents/skills/r2i-skill/references/learning-doc-playbook.md`
 - `../../../.agents/skills/r2i-skill/references/user-scenarios.md`
@@ -17,6 +18,7 @@ Use the repository-backed skill instructions and references below as the source 
 - `../../../.agents/skills/r2i-skill/references/output-modes.md`
 - `../../../.agents/skills/r2i-skill/references/preview-workflow.md`
 - `../../../.agents/skills/r2i-skill/references/score-report.md`
+- `../../../.agents/skills/r2i-skill/references/study-doc-production.md`
 
 When invoked in Claude Code:
 1. Read the shared files above first.

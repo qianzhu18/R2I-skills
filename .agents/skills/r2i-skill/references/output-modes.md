@@ -58,6 +58,10 @@ Minimum deliverables:
 - 3-5 checkpoint questions
 - practice tasks
 
+When the output is meant to be reused or previewed locally:
+- prefer the canonical seven-page docs bundle
+- follow `study-doc-production.md`
+
 ## interview
 
 Use when the user wants speaking material or interview prep.

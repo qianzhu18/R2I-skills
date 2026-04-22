@@ -52,12 +52,14 @@ Before writing the answer, read:
 - `references/user-scenarios.md`
 - `references/interview-engine.md`
 - `references/evidence-and-honesty.md`
+- `references/evidence-rubric.md`
 - `references/github-learning-patterns.md`
 - `references/learning-doc-playbook.md`
 - `references/mastery-loop.md`
 - `references/output-modes.md`
 - `references/preview-workflow.md`
 - `references/score-report.md`
+- `references/study-doc-production.md`
 
 ## Workflow
 
@@ -173,6 +175,11 @@ If the user asks for local preview, browser preview, localhost preview, or a stu
 - run `${SKILL_DIR}/scripts/serve_study_doc.py`
 - return the localhost URL instead of only pasting markdown into chat
 
+If the user wants a reusable, production-grade `study-doc`, example output, or regression fixture:
+- use `references/study-doc-production.md`
+- prefer the canonical seven-page docs bundle
+- validate the structure mentally against `references/evidence-rubric.md`
+
 ## Quality Bar
 
 Follow these rules on every run:
@@ -227,6 +234,8 @@ Also apply the stitched GitHub patterns from `references/github-learning-pattern
 - repo structure tables
 - learner / contributor / interviewer lanes
 - generated-file warnings
+
+Treat `references/study-doc-production.md` as the minimum production contract.
 
 If the host only allows a single response, keep the same order in one compact markdown document instead of inventing a different structure.
 

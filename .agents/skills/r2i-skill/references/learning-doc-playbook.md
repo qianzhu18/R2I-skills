@@ -20,6 +20,7 @@ Research note:
 - common patterns are overview, quick start, system map, key flows, reading path, checklist, and pitfalls
 
 Also apply `github-learning-patterns.md`.
+Also apply `study-doc-production.md` when the output should be reusable or saved as an example.
 
 The stitched target is:
 - readable like onboarding docs
