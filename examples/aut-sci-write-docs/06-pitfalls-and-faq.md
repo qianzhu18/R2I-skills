@@ -14,6 +14,10 @@ Also not true. The PPT path intentionally keeps a manual editing step.
 
 No. The strongest story is workflow modularization and task packaging.
 
+### "Everything under examples or outputs is a good edit target."
+
+Also no. Those directories are often artifacts, samples, or secondary material. Start with the workflow contract and implementation files first.
+
 ## Likely Interview Trap
 
 If you oversell ownership or autonomy, an interviewer will quickly ask:
@@ -33,3 +37,11 @@ If you oversell ownership or autonomy, an interviewer will quickly ask:
 Either:
 - `paper_workflow.py` for workflow orchestration
 - `sci_search.py` for multi-source search plus normalization
+
+### What should I avoid editing first if I am still learning the repo?
+
+Avoid starting with:
+
+- generated outputs
+- historical example artifacts
+- cosmetic docs-only areas that do not reveal core workflow boundaries

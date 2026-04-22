@@ -52,6 +52,7 @@ Before writing the answer, read:
 - `references/user-scenarios.md`
 - `references/interview-engine.md`
 - `references/evidence-and-honesty.md`
+- `references/github-learning-patterns.md`
 - `references/learning-doc-playbook.md`
 - `references/mastery-loop.md`
 - `references/output-modes.md`
@@ -219,6 +220,13 @@ When `study-doc` mode is selected, prefer the onboarding docs bundle structure f
 5. `04-reading-path`
 6. `05-checklist`
 7. `06-pitfalls-and-faq`
+
+Also apply the stitched GitHub patterns from `references/github-learning-patterns.md`, especially:
+- stable navigation
+- success signals
+- repo structure tables
+- learner / contributor / interviewer lanes
+- generated-file warnings
 
 If the host only allows a single response, keep the same order in one compact markdown document instead of inventing a different structure.
 

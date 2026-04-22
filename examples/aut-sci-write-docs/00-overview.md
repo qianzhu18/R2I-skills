@@ -24,3 +24,9 @@ High confidence:
 Lower confidence:
 - exact production adoption
 - how heavily each skill is used in practice
+
+## Choose Your Track
+
+- learner track: start if you mainly want to understand the suite shape and the strongest workflow
+- contributor track: start if you want to know which folders are worth editing and how to verify changes
+- interviewer track: start if your goal is to explain the architecture and defend project claims under pressure

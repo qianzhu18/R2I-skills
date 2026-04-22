@@ -37,6 +37,7 @@ Main skill:
 
 Supporting references:
 - `.agents/skills/r2i-skill/references/candidate-profile.md`
+- `.agents/skills/r2i-skill/references/github-learning-patterns.md`
 - `.agents/skills/r2i-skill/references/learning-doc-playbook.md`
 - `.agents/skills/r2i-skill/references/mastery-loop.md`
 - `.agents/skills/r2i-skill/references/interview-engine.md`
@@ -101,6 +102,17 @@ The preview script accepts either:
 - a single markdown file
 
 This is the intended bridge between "the model generated a learning document" and "the user can actually read it like a local doc site".
+
+## Research Basis
+
+The current study-doc structure is stitched from several public GitHub patterns rather than invented from scratch. The main references were:
+
+- [flare-foundation/developer-hub](https://github.com/flare-foundation/developer-hub)
+- [facebook/react-native-website](https://github.com/facebook/react-native-website)
+- [MicrosoftDocs/Agent-Skills](https://github.com/MicrosoftDocs/Agent-Skills)
+- [CodeBoarding/CodeBoarding](https://github.com/CodeBoarding/CodeBoarding)
+- [CodeBoarding/GeneratedOnBoardings](https://github.com/CodeBoarding/GeneratedOnBoardings)
+- [netresearch/agent-rules-skill](https://github.com/netresearch/agent-rules-skill)
 
 ## Candidate Inputs
 

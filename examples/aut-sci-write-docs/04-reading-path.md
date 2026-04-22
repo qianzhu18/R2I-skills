@@ -24,3 +24,33 @@
 - `docs/` visual assets
 - example output binaries
 - historical figure output directories
+
+## Three Useful Lanes
+
+### Learner Lane
+
+Use this if your goal is repo comprehension:
+
+1. `README.md`
+2. `.claude-plugin/marketplace.json`
+3. `skills/sci-ppt/SKILL.md`
+4. `paper_workflow.py`
+
+### Contributor Lane
+
+Use this if your goal is safe local edits:
+
+1. `README.md`
+2. tests
+3. `extract_core_insights.py`
+4. one target skill implementation file
+
+### Interviewer Lane
+
+Use this if your goal is explanation and defense:
+
+1. `README.md`
+2. `skills/sci-ppt/SKILL.md`
+3. `paper_workflow.py`
+4. `sci_search.py`
+5. tests as proof points

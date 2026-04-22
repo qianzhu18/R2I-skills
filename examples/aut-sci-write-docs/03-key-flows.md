@@ -24,3 +24,9 @@ This shows the repository is not chasing blind end-to-end automation. It keeps a
 - local journal metric normalization
 
 That makes it more than a simple paper search wrapper.
+
+## If You Want To Drill Down
+
+- for workflow orchestration: read `paper_workflow.py`
+- for packaging and invocation: read the corresponding `skills/sci-ppt/SKILL.md`
+- for search-system talking points: read `sci_search.py`

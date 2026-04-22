@@ -25,8 +25,22 @@ Important Python entrypoints:
 - `.claude-plugin/marketplace.json` aggregates the skills into one plugin
 - `skills-cli.js` provides local discovery for installed skills
 
+## Repo Structure Lens
+
+- `skills/`: declarative entrypoints and workflow contracts
+- `scripts/`: shared executable helpers
+- `.claude-plugin/`: plugin packaging and discovery metadata
+- `examples/` and output folders: demonstration or generated material
+- `docs/`: supporting explanation, not always the core runtime path
+
 ## Most Important Engineering Boundary
 
 The strongest boundary is between:
 - the declarative workflow contract in `SKILL.md`
 - the executable logic in Python scripts and packages
+
+## Best Drill-Down Candidates
+
+- `skills/sci-ppt/src/aut_sci_ppt/paper_workflow.py`: richest end-to-end workflow
+- `skills/sci-search/sci_search.py`: multi-source retrieval and normalization
+- `scripts/extract_core_insights.py`: script-level evidence extraction plus testable behavior
